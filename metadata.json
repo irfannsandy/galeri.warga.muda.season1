@@ -1,0 +1,8 @@
+{
+  "name": "Galeri Warga Negara Muda",
+  "description": "Pameran Karya Siswa Interaktif Pendidikan Pancasila SMP Kelas IX",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "galeri-warga-negara-muda",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Pameran Karya Siswa Interaktif Pendidikan Pancasila SMP Kelas IX",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo 'Build successful'"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "sharp": "^0.35.5"
+  }
+}

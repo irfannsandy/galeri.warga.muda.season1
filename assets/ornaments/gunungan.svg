@@ -1,0 +1,56 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 380' width='240' height='380'>
+  <defs>
+    <linearGradient id='goldG' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#FCE08A'/>
+      <stop offset='50%' stop-color='#D4AF37'/>
+      <stop offset='100%' stop-color='#8C6239'/>
+    </linearGradient>
+  </defs>
+  <!-- Outer leaf-flame shape of Gunungan -->
+  <path d='M 120,15 
+           C 165,80 215,170 210,260 
+           C 205,310 180,340 120,345 
+           C 60,340 35,310 30,260 
+           C 25,170 75,80 120,15 Z' 
+        fill='none' stroke='url(#goldG)' stroke-width='3.5'/>
+  <!-- Inner border line -->
+  <path d='M 120,28 
+           C 158,86 200,168 196,252 
+           C 192,298 170,326 120,332 
+           C 70,326 48,298 44,252 
+           C 40,168 82,86 120,28 Z' 
+        fill='none' stroke='#B8860B' stroke-width='1.5' stroke-dasharray='4,2'/>
+  <!-- Central Spire / Mast (Soko Guru) -->
+  <line x1='120' y1='15' x2='120' y2='375' stroke='url(#goldG)' stroke-width='3'/>
+  <!-- Bottom handle / Cempurit -->
+  <path d='M 115,345 L 115,378 L 125,378 L 125,345 Z' fill='url(#goldG)'/>
+  <!-- Sacred Gateway (Gapura Paduraksa) at base -->
+  <rect x='85' y='265' width='70' height='60' rx='4' fill='none' stroke='url(#goldG)' stroke-width='2'/>
+  <path d='M 80,265 L 120,230 L 160,265 Z' fill='none' stroke='url(#goldG)' stroke-width='2'/>
+  <line x1='120' y1='265' x2='120' y2='325' stroke='url(#goldG)' stroke-width='1.5'/>
+  <!-- Gateway wing stairs -->
+  <path d='M 65,325 L 85,325 L 85,305 L 75,305 L 75,285 L 65,285 Z' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <path d='M 175,325 L 155,325 L 155,305 L 165,305 L 165,285 L 175,285 Z' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <!-- Tree of Life (Pohon Hayat) Branches & Foliage -->
+  <path d='M 120,230 C 95,200 65,215 55,185 C 75,180 95,195 120,210' fill='none' stroke='url(#goldG)' stroke-width='1.5'/>
+  <path d='M 120,230 C 145,200 175,215 185,185 C 165,180 145,195 120,210' fill='none' stroke='url(#goldG)' stroke-width='1.5'/>
+  
+  <path d='M 120,195 C 85,160 55,175 45,135 C 70,135 95,155 120,175' fill='none' stroke='url(#goldG)' stroke-width='1.8'/>
+  <path d='M 120,195 C 155,160 185,175 195,135 C 170,135 145,155 120,175' fill='none' stroke='url(#goldG)' stroke-width='1.8'/>
+  
+  <path d='M 120,155 C 80,120 70,110 65,85 C 85,95 105,120 120,135' fill='none' stroke='url(#goldG)' stroke-width='1.5'/>
+  <path d='M 120,155 C 160,120 170,110 175,85 C 155,95 135,120 120,135' fill='none' stroke='url(#goldG)' stroke-width='1.5'/>
+
+  <path d='M 120,115 C 95,85 90,65 95,45 C 105,60 115,75 120,95' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <path d='M 120,115 C 145,85 150,65 145,45 C 135,60 125,75 120,95' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+
+  <!-- Foliage spirals / curls -->
+  <circle cx='55' cy='185' r='5' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <circle cx='185' cy='185' r='5' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <circle cx='45' cy='135' r='4' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <circle cx='195' cy='135' r='4' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <circle cx='65' cy='85' r='3.5' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <circle cx='175' cy='85' r='3.5' fill='none' stroke='url(#goldG)' stroke-width='1.2'/>
+  <!-- Top crown flame -->
+  <circle cx='120' cy='25' r='5' fill='#FCE08A' fill-opacity='0.8'/>
+</svg>
