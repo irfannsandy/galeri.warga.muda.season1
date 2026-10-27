@@ -682,39 +682,102 @@
                     </div>
                 </div>
 
-                <!-- FILE UPLOAD INPUT OR PRESET SAMPLE -->
-                <div class="bg-amber-100/50 p-4 rounded-2xl border border-amber-200 space-y-3">
-                    <label class="block text-xs font-bold text-amber-900 flex items-center justify-between">
-                        <span><i class="fa-solid fa-file-arrow-up mr-1 text-amber-700"></i> Unggah File Karya (Video, Gambar, PDF, Word)</span>
-                        <span class="text-[10px] text-amber-800 bg-amber-200/70 px-2 py-0.5 rounded-full font-semibold">Maks 50MB</span>
-                    </label>
+                <!-- FILE UPLOAD INPUT OR PRESET SAMPLE (VIDEO, GAMBAR, PDF, WORD) -->
+                <div class="bg-amber-100/60 p-4 rounded-2xl border-2 border-amber-300/80 space-y-3 shadow-inner">
+                    <div class="flex flex-wrap items-center justify-between gap-1.5">
+                        <label class="block text-xs font-bold text-amber-950 flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-video text-amber-800 text-sm"></i>
+                            <span>Unggah File Lokal (Video / Gambar / PDF / Word) atau Pilih Preset</span>
+                        </label>
+                        <span class="text-[10px] text-red-800 bg-red-100 border border-red-300 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-circle-play text-red-600"></i> Mendukung Video (Maks 50MB)
+                        </span>
+                    </div>
                     
-                    <input type="file" id="localFileInput" onchange="handleFileSelect(event)" accept="video/*,image/*,.mp4,.webm,.ogg,.mov,.pdf,.doc,.docx" 
-                        class="w-full text-xs text-amber-900 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-800 file:text-white hover:file:bg-amber-900 cursor-pointer">
+                    <input type="file" id="localFileInput" onchange="handleFileSelect(event)" 
+                        accept="video/mp4,video/webm,video/ogg,video/quicktime,video/*,image/png,image/jpeg,image/webp,image/*,.pdf,.doc,.docx" 
+                        class="w-full text-xs text-amber-900 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-800 file:text-white hover:file:bg-amber-900 cursor-pointer border border-amber-300 rounded-xl bg-white p-1.5 shadow-sm">
                     
-                    <p class="text-[11px] text-amber-800/80">
-                        <i class="fa-solid fa-circle-info mr-1 text-amber-600"></i> Format yang didukung: <strong>Video (MP4, WebM, MOV)</strong>, <strong>Gambar/Poster</strong>, <strong>PDF</strong>, dan <strong>Word</strong>.
+                    <p class="text-[11px] text-amber-900/90 font-medium">
+                        <i class="fa-solid fa-circle-info mr-1 text-amber-700"></i> Format yang didukung: <strong>Video (MP4, WebM, MOV)</strong>, <strong>Gambar/Poster</strong>, <strong>PDF</strong>, dan <strong>Word (.docx)</strong>.
                     </p>
 
-                    <div id="fileUploadStatus" class="hidden text-xs text-emerald-800 font-medium flex items-center gap-1.5 bg-emerald-50 p-2.5 rounded-xl border border-emerald-300">
-                        <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i> <span id="fileUploadName">File berhasil dimuat.</span>
+                    <!-- Interactive Live Preview Box for Selected Media -->
+                    <div id="fileUploadPreviewContainer" class="hidden space-y-2">
+                        <!-- Video Live Preview -->
+                        <div id="videoUploadPreviewBox" class="hidden bg-stone-900 rounded-2xl p-3 border-2 border-amber-500/70 shadow-lg space-y-2">
+                            <div class="flex items-center justify-between text-xs text-amber-200">
+                                <span class="font-bold flex items-center gap-1.5">
+                                    <i class="fa-solid fa-circle-play text-red-500 text-sm animate-pulse"></i> 
+                                    <span>Pratinjau Video Karya Siswa (Siap Diunggah):</span>
+                                </span>
+                                <span id="videoPreviewSize" class="text-[10px] bg-stone-800 px-2.5 py-0.5 rounded text-amber-300 border border-amber-600/40"></span>
+                            </div>
+                            <div class="relative rounded-xl overflow-hidden bg-black flex items-center justify-center max-h-52 aspect-video mx-auto">
+                                <video id="previewVideoElement" controls playsinline class="w-full h-full max-h-52 object-contain rounded-xl"></video>
+                            </div>
+                            <p class="text-[10px] text-amber-300/90 text-center flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i> Video berhasil dimuat dan siap diputar di pameran!
+                            </p>
+                        </div>
+
+                        <!-- Image Live Preview -->
+                        <div id="imageUploadPreviewBox" class="hidden bg-white rounded-2xl p-3 border border-amber-300 shadow-sm flex items-center gap-3">
+                            <img id="previewImageElement" class="w-16 h-16 object-cover rounded-xl border border-amber-300 shadow" alt="Preview Gambar">
+                            <div class="text-xs text-amber-900 space-y-0.5">
+                                <p id="previewImageName" class="font-bold truncate max-w-xs"></p>
+                                <span class="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Gambar / Poster siap diunggah
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Generic File Status (PDF / Word) -->
+                        <div id="fileUploadStatus" class="hidden text-xs text-emerald-950 font-medium flex items-center gap-2 bg-emerald-50 p-2.5 rounded-xl border border-emerald-300 shadow-sm">
+                            <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i> 
+                            <span id="fileUploadName">File berhasil dimuat.</span>
+                        </div>
+                    </div>
+
+                    <!-- Online Video Link (YouTube / Direct MP4 URL) -->
+                    <div class="pt-2 border-t border-amber-200/60">
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="text-amber-900 font-semibold">Atau tautan video online (YouTube / MP4):</span>
+                            <button type="button" onclick="toggleVideoUrlInput()" class="text-amber-800 hover:text-amber-950 font-bold underline cursor-pointer">
+                                <span id="videoUrlToggleText">+ Masukkan Link Video</span>
+                            </button>
+                        </div>
+                        <div id="videoUrlContainer" class="hidden mt-2 space-y-2">
+                            <div class="flex gap-2">
+                                <input type="url" id="customVideoUrlInput" placeholder="Contoh: https://www.youtube.com/watch?v=... atau https://domain/video.mp4" 
+                                    class="flex-grow px-3 py-1.5 rounded-xl border border-amber-300 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <button type="button" onclick="applyCustomVideoUrl()" class="px-3 py-1.5 bg-red-700 hover:bg-red-800 text-white font-bold text-xs rounded-xl shrink-0 transition shadow-sm">
+                                    Pakai Link
+                                </button>
+                            </div>
+                            <p class="text-[10px] text-amber-800/80">Mendukung tautan langsung MP4 atau tautan video YouTube siswa.</p>
+                        </div>
                     </div>
 
                     <!-- Preset Samples Fallback -->
-                    <div class="pt-1 border-t border-amber-200/60">
+                    <div class="pt-2 border-t border-amber-200/60">
                         <span class="text-[11px] text-amber-900 block mb-1.5 font-semibold">Atau gunakan pilihan cepat karya sampel:</span>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <button type="button" onclick="setPresetSample('video', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'Video Aksi Nyata Pelajar')" class="px-2.5 py-1.5 bg-white border border-amber-300 rounded-xl text-amber-900 hover:bg-amber-50 font-medium flex items-center gap-1.5 shadow-sm transition">
-                                <i class="fa-solid fa-film text-red-600"></i> 🎬 Video Dokumenter (.mp4)
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <button type="button" onclick="setPresetSample('video', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'Video Dokumenter Aksi Gotong Royong')" class="px-2.5 py-2 bg-gradient-to-r from-red-50 to-amber-50 border-2 border-red-400 hover:border-red-600 rounded-xl text-red-950 font-bold flex items-center justify-center gap-1.5 shadow-sm transition hover:scale-[1.02]">
+                                <i class="fa-solid fa-film text-red-600"></i>
+                                <span>🎬 Video (.mp4)</span>
                             </button>
-                            <button type="button" onclick="setPresetSample('image', 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800', 'Poster Pendidikan')" class="px-2.5 py-1.5 bg-white border border-amber-300 rounded-xl text-amber-900 hover:bg-amber-50 font-medium flex items-center gap-1.5 shadow-sm transition">
-                                <i class="fa-solid fa-image text-amber-600"></i> 🖼️ Poster Gambar
+                            <button type="button" onclick="setPresetSample('image', 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800', 'Poster Pendidikan Hak Siswa')" class="px-2.5 py-2 bg-white border border-amber-300 hover:border-amber-500 rounded-xl text-amber-900 font-semibold flex items-center justify-center gap-1.5 shadow-sm transition hover:scale-[1.02]">
+                                <i class="fa-solid fa-image text-amber-600"></i>
+                                <span>🖼️ Poster</span>
                             </button>
-                            <button type="button" onclick="setPresetSample('pdf', 'sample-hak-kewajiban.pdf', 'Dokumen PDF Analisis Hak')" class="px-2.5 py-1.5 bg-white border border-amber-300 rounded-xl text-amber-900 hover:bg-amber-50 font-medium flex items-center gap-1.5 shadow-sm transition">
-                                <i class="fa-solid fa-file-pdf text-red-500"></i> 📄 Dokumen PDF
+                            <button type="button" onclick="setPresetSample('pdf', 'sample-hak-kewajiban.pdf', 'Dokumen PDF Analisis Hak')" class="px-2.5 py-2 bg-white border border-amber-300 hover:border-amber-500 rounded-xl text-amber-900 font-semibold flex items-center justify-center gap-1.5 shadow-sm transition hover:scale-[1.02]">
+                                <i class="fa-solid fa-file-pdf text-red-500"></i>
+                                <span>📄 PDF</span>
                             </button>
-                            <button type="button" onclick="setPresetSample('word', 'makalah-warga-negara.docx', 'Makalah Word Esai Pancasila')" class="px-2.5 py-1.5 bg-white border border-amber-300 rounded-xl text-amber-900 hover:bg-amber-50 font-medium flex items-center gap-1.5 shadow-sm transition">
-                                <i class="fa-solid fa-file-word text-blue-600"></i> 📝 File Word (.docx)
+                            <button type="button" onclick="setPresetSample('word', 'makalah-warga-negara.docx', 'Makalah Word Esai Bela Negara')" class="px-2.5 py-2 bg-white border border-amber-300 hover:border-amber-500 rounded-xl text-amber-900 font-semibold flex items-center justify-center gap-1.5 shadow-sm transition hover:scale-[1.02]">
+                                <i class="fa-solid fa-file-word text-blue-600"></i>
+                                <span>📝 Word</span>
                             </button>
                         </div>
                     </div>
@@ -1222,8 +1285,15 @@
         }
 
         /* -------------------------------------------------------------------------- */
-        /* FILE UPLOAD — SUPABASE STORAGE                                             */
+        /* FILE UPLOAD & MEDIA HANDLING (VIDEO, IMAGE, PDF, WORD)                     */
         /* -------------------------------------------------------------------------- */
+        function getYouTubeId(url) {
+            if (!url) return null;
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
         function handleFileSelect(event) {
             const file = event.target.files[0];
             if(!file) return;
@@ -1231,9 +1301,13 @@
             const fileName = file.name;
             const extension = fileName.split('.').pop().toLowerCase();
 
-            const allowedExtensions = ['jpg','jpeg','png','webp','gif','pdf','doc','docx','mp4','webm','ogg','mov','mkv','avi','m4v'];
-            if(!allowedExtensions.includes(extension) && !(file.type && file.type.startsWith('video/'))) {
-                alert('Format file tidak didukung! Pilih file Video (MP4, WebM, MOV), Gambar, PDF, atau Word.');
+            const isVideo = ['mp4','webm','ogg','mov','mkv','avi','m4v'].includes(extension) || (file.type && file.type.startsWith('video/'));
+            const isPdf = extension === 'pdf';
+            const isWord = ['doc','docx'].includes(extension);
+            const isImage = ['jpg','jpeg','png','webp','gif','svg','bmp'].includes(extension) || (file.type && file.type.startsWith('image/'));
+
+            if(!isVideo && !isPdf && !isWord && !isImage) {
+                alert('Format file tidak didukung! Pilih file Video (MP4, WebM, MOV), Gambar, PDF, atau File Word.');
                 event.target.value = '';
                 return;
             }
@@ -1246,18 +1320,17 @@
             }
 
             let fileType = 'image';
-            if(['mp4','webm','ogg','mov','mkv','avi','m4v'].includes(extension) || (file.type && file.type.startsWith('video/'))) {
-                fileType = 'video';
-            } else if(extension === 'pdf') {
-                fileType = 'pdf';
-            } else if(['doc','docx'].includes(extension)) {
-                fileType = 'word';
-            }
+            if(isVideo) fileType = 'video';
+            else if(isPdf) fileType = 'pdf';
+            else if(isWord) fileType = 'word';
+
+            const objectUrl = URL.createObjectURL(file);
 
             pendingUploadedFile = {
                 fileType,
                 file,
                 fileName,
+                fileUrl: objectUrl,
                 pdfPages: fileType === 'pdf' ? 1 : null,
                 wordTextContent: fileType === 'word'
                     ? `Dokumen Word: ${fileName}. Buka file untuk membaca isi lengkap.`
@@ -1273,17 +1346,101 @@
             }
 
             const sizeFormatted = (file.size / (1024 * 1024)).toFixed(1);
-            const labelType = fileType === 'video' ? 'Video' : fileType === 'pdf' ? 'PDF' : fileType === 'word' ? 'Word' : 'Gambar';
-            showFileUploadSuccess(
-                `${labelType} "${fileName}" (${sizeFormatted} MB) siap diunggah ke galeri.`
-            );
+            showInteractivePreview(fileType, objectUrl, fileName, `${sizeFormatted} MB`);
         }
 
-        function showFileUploadSuccess(msg) {
-            const statusDiv = document.getElementById('fileUploadStatus');
-            const nameSpan = document.getElementById('fileUploadName');
-            nameSpan.innerText = msg;
-            statusDiv.classList.remove('hidden');
+        function showInteractivePreview(fileType, url, fileName, sizeText) {
+            const container = document.getElementById('fileUploadPreviewContainer');
+            const videoBox = document.getElementById('videoUploadPreviewBox');
+            const previewVideo = document.getElementById('previewVideoElement');
+            const imageBox = document.getElementById('imageUploadPreviewBox');
+            const previewImage = document.getElementById('previewImageElement');
+            const docStatus = document.getElementById('fileUploadStatus');
+            const docName = document.getElementById('fileUploadName');
+
+            if (!container) return;
+            container.classList.remove('hidden');
+
+            if (videoBox) videoBox.classList.add('hidden');
+            if (imageBox) imageBox.classList.add('hidden');
+            if (docStatus) docStatus.classList.add('hidden');
+            if (previewVideo) {
+                try { previewVideo.pause(); } catch(_) {}
+            }
+
+            if (fileType === 'video') {
+                if (videoBox && previewVideo) {
+                    videoBox.classList.remove('hidden');
+                    previewVideo.src = url;
+                }
+                const sizeBadge = document.getElementById('videoPreviewSize');
+                if (sizeBadge) sizeBadge.innerText = `${fileName} • ${sizeText || 'Siap Diputar'}`;
+            } else if (fileType === 'image') {
+                if (imageBox && previewImage) {
+                    imageBox.classList.remove('hidden');
+                    previewImage.src = url;
+                }
+                const imgName = document.getElementById('previewImageName');
+                if (imgName) imgName.innerText = `${fileName} (${sizeText || 'Gambar'})`;
+            } else {
+                if (docStatus) docStatus.classList.remove('hidden');
+                const icon = fileType === 'pdf' ? 'fa-file-pdf text-red-600' : 'fa-file-word text-blue-600';
+                if (docName) {
+                    docName.innerHTML = `<i class="fa-solid ${icon} mr-1 text-base"></i> File ${fileType.toUpperCase()}: <strong>${fileName}</strong> (${sizeText || 'Dokumen'}) siap diunggah.`;
+                }
+            }
+        }
+
+        function toggleVideoUrlInput() {
+            const container = document.getElementById('videoUrlContainer');
+            const toggleText = document.getElementById('videoUrlToggleText');
+            if (!container) return;
+            const isHidden = container.classList.contains('hidden');
+            if (isHidden) {
+                container.classList.remove('hidden');
+                if (toggleText) toggleText.innerText = '- Tutup Link Video';
+            } else {
+                container.classList.add('hidden');
+                if (toggleText) toggleText.innerText = '+ Masukkan Link Video';
+            }
+        }
+
+        function applyCustomVideoUrl() {
+            const input = document.getElementById('customVideoUrlInput');
+            if (!input) return;
+            const url = input.value.trim();
+            if (!url) {
+                alert('Silakan masukkan tautan video terlebih dahulu.');
+                return;
+            }
+
+            const ytId = getYouTubeId(url);
+            pendingUploadedFile = {
+                fileType: 'video',
+                fileUrl: url,
+                fileName: ytId ? `YouTube Video (${ytId})` : 'Video Online MP4'
+            };
+
+            const typeInput = document.getElementById('newType');
+            if(typeInput && !typeInput.value.trim()) {
+                typeInput.value = ytId ? 'Video YouTube Dokumenter' : 'Video Online / MP4';
+            }
+
+            if (!ytId) {
+                showInteractivePreview('video', url, 'Tautan Video Online', 'Streaming Link');
+            } else {
+                const docStatus = document.getElementById('fileUploadStatus');
+                const docName = document.getElementById('fileUploadName');
+                const container = document.getElementById('fileUploadPreviewContainer');
+                if (container && docStatus && docName) {
+                    container.classList.remove('hidden');
+                    docStatus.classList.remove('hidden');
+                    document.getElementById('videoUploadPreviewBox')?.classList.add('hidden');
+                    document.getElementById('imageUploadPreviewBox')?.classList.add('hidden');
+                    docName.innerHTML = `<i class="fa-brands fa-youtube text-red-600 mr-1 text-base"></i> Tautan YouTube berhasil dipilih: <strong>${url}</strong>`;
+                }
+            }
+            alert('Tautan video berhasil diterapkan! Lengkapi form dan klik "Simpan & Tampilkan Karya".');
         }
 
         function setPresetSample(type, urlOrName, label) {
@@ -1291,12 +1448,15 @@
             if(type === 'video') {
                 pendingUploadedFile = { fileType: 'video', fileUrl: urlOrName, fileName: label };
                 if(typeInput && !typeInput.value.trim()) typeInput.value = 'Video Dokumenter / MP4';
+                showInteractivePreview('video', urlOrName, label, 'Preset Sample MP4');
             } else if(type === 'image') {
                 pendingUploadedFile = { fileType: 'image', fileUrl: urlOrName, fileName: label };
                 if(typeInput && !typeInput.value.trim()) typeInput.value = 'Poster / Gambar Infografis';
+                showInteractivePreview('image', urlOrName, label, 'Preset Gambar HD');
             } else if(type === 'pdf') {
                 pendingUploadedFile = { fileType: 'pdf', fileUrl: urlOrName, fileName: label, pdfPages: 3 };
                 if(typeInput && !typeInput.value.trim()) typeInput.value = 'Dokumen PDF Analisis';
+                showInteractivePreview('pdf', urlOrName, label, 'Preset Dokumen PDF');
             } else if(type === 'word') {
                 pendingUploadedFile = {
                     fileType: 'word',
@@ -1305,9 +1465,8 @@
                     wordTextContent: 'Naskah esai tulisan siswa mengenai kesadaran berbangsa dan bernegara dalam kehidupan sehari-hari.'
                 };
                 if(typeInput && !typeInput.value.trim()) typeInput.value = 'Makalah Word (.docx)';
+                showInteractivePreview('word', urlOrName, label, 'Preset File Word');
             }
-
-            showFileUploadSuccess(`Preset "${label}" terpilih.`);
         }
 
         async function uploadFileToStorage(file) {
@@ -1528,13 +1687,18 @@
 
         function renderArtworkPreviewThumbnail(art, frameClass) {
             if(art.fileType === 'video') {
+                const ytId = getYouTubeId(art.fileUrl);
                 return `
                     <div class="relative w-full h-48 bg-gradient-to-br from-slate-900 via-stone-900 to-amber-950 rounded overflow-hidden p-2 border-4 border-amber-400/50 shadow-md group-hover:border-amber-300 transition">
-                        <video src="${art.fileUrl}" class="w-full h-full object-cover rounded opacity-75 pointer-events-none" preload="metadata" muted playsinline></video>
+                        ${ytId ? `
+                            <img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="${art.title}" class="w-full h-full object-cover rounded opacity-80 group-hover:scale-105 transition duration-500">
+                        ` : `
+                            <video src="${art.fileUrl}" class="w-full h-full object-cover rounded opacity-75 pointer-events-none" preload="metadata" muted playsinline></video>
+                        `}
                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40 flex flex-col justify-between p-3 text-white">
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] bg-red-600/90 text-white font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
-                                    <i class="fa-solid fa-circle-play text-[9px]"></i> Video MP4
+                                    <i class="fa-solid fa-circle-play text-[9px]"></i> ${ytId ? 'YouTube' : 'Video MP4'}
                                 </span>
                                 <span class="text-[10px] bg-black/60 px-2 py-0.5 rounded text-amber-200 border border-amber-500/30">
                                     <i class="fa-solid fa-film mr-1"></i>Karya Video
@@ -1632,22 +1796,40 @@
             
             let fileDisplayHTML = '';
             if(art.fileType === 'video') {
+                const ytId = getYouTubeId(art.fileUrl);
+                let playerHtml = '';
+                if (ytId) {
+                    playerHtml = `
+                        <iframe class="w-full aspect-video rounded-xl shadow-2xl" 
+                            src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0" 
+                            title="${art.title}" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    `;
+                } else {
+                    playerHtml = `
+                        <video src="${art.fileUrl}" controls autoplay playsinline class="w-full h-full object-contain max-h-[380px] rounded-xl shadow-2xl">
+                            Browser Anda tidak mendukung pemutar video HTML5.
+                        </video>
+                    `;
+                }
+
                 fileDisplayHTML = `
                     <div class="bg-stone-950 p-4 rounded-2xl text-white space-y-3 border-2 border-amber-500/40 shadow-xl flex flex-col justify-between">
                         <div class="flex items-center justify-between border-b border-amber-800/60 pb-2.5">
                             <span class="font-bold text-xs text-amber-300 flex items-center gap-2">
                                 <i class="fa-solid fa-circle-play text-red-500 text-sm"></i> Pemutar Video Karya Siswa
                             </span>
-                            <span class="text-[10px] bg-red-950 text-red-200 border border-red-800 px-2.5 py-0.5 rounded-full font-semibold">Video MP4 / WebM</span>
+                            <span class="text-[10px] bg-red-950 text-red-200 border border-red-800 px-2.5 py-0.5 rounded-full font-semibold">
+                                ${ytId ? 'YouTube Video' : 'Video MP4 / WebM'}
+                            </span>
                         </div>
-                        <div class="relative rounded-xl overflow-hidden bg-black flex items-center justify-center aspect-video max-h-[360px] shadow-2xl">
-                            <video src="${art.fileUrl}" controls autoplay playsinline class="w-full h-full object-contain max-h-[360px] rounded-xl">
-                                Browser Anda tidak mendukung pemutar video HTML5.
-                            </video>
+                        <div class="relative rounded-xl overflow-hidden bg-black flex items-center justify-center aspect-video max-h-[380px] shadow-2xl">
+                            ${playerHtml}
                         </div>
                         <div class="flex items-center justify-between text-[11px] text-amber-200/80 px-1 pt-1">
                             <span><i class="fa-solid fa-clapperboard mr-1 text-amber-400"></i> Video Dokumenter / Edukasi</span>
-                            <span><i class="fa-solid fa-volume-high mr-1 text-amber-400"></i> Suara & Kontrol Aktif</span>
+                            <span><i class="fa-solid fa-volume-high mr-1 text-amber-400"></i> Suara & Kontrol Pemutaran Lengkap</span>
                         </div>
                     </div>
                 `;
@@ -1962,6 +2144,14 @@
                 const videos = el.querySelectorAll('video');
                 videos.forEach(v => {
                     try { v.pause(); } catch(_) {}
+                });
+                // Reload iframes to cut off YouTube audio
+                const iframes = el.querySelectorAll('iframe');
+                iframes.forEach(f => {
+                    try {
+                        const s = f.src;
+                        f.src = s;
+                    } catch(_) {}
                 });
             }
         }
